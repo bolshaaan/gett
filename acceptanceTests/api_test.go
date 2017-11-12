@@ -11,6 +11,7 @@ import (
 	dbPq "github.com/bolshaaan/gett/db"
 	"encoding/json"
 	"github.com/bolshaaan/gett/models"
+	"github.com/bolshaaan/gett/handlers"
 )
 
 var testAddr = "127.0.0.1:8081"
@@ -60,7 +61,7 @@ func TestAPI(t *testing.T) {
 
 		dec := json.NewDecoder(resp.Body)
 
-		report := []gett.ErrReport{}
+		report := []handlers.ErrReport{}
 		if err := dec.Decode(&report); err != nil {
 			t.Fatal("error decoding ", err)
 		}

@@ -1,12 +1,10 @@
-package gett
+package handlers
 
 import (
 	"testing"
 	"github.com/valyala/fasthttp"
 	"github.com/stretchr/testify/assert"
 	"github.com/bolshaaan/gett/models"
-	"time"
-	"github.com/pkg/errors"
 	"encoding/json"
 	"github.com/stretchr/testify/require"
 )
@@ -37,39 +35,6 @@ func TestGetHandler(t *testing.T) {
 		assert.Equal(t, ctx.Response.StatusCode(), fasthttp.StatusOK )
 		assert.Equal(t, ctx.Response.Header.Peek("Content-Type"), []byte("application/json") )
 	})
-}
-
-var mockDB = make(map[uint]*MockDriver)
-
-type MockDriver struct {
-	ID            uint   `json:"id" gorm:"primary_key"`
-	Name          string `json:"name" gorm:"type:varchar(255);not null"`
-	LicenseNumber string `json:"license_number" gorm:"type:varchar(255);not null;unique"`
-
-	CreatedAt time.Time `json:"-"`
-	UpdatedAt time.Time `json:"-"`
-}
-
-var BadDriverID uint = 100
-
-func (d MockDriver) Create() error {
-	/* nothing do -- no database */
-
-	if d.ID == BadDriverID {
-		return errors.New("some unlucky driver")
-	}
-
-	mockDB[ d.ID ] = &d
-	return nil
-}
-func (d MockDriver) GetID() uint {
-	return d.ID
-}
-func (d MockDriver) BeforeSave() error {
-	return nil
-}
-func (d MockDriver) Validate() error {
-	return nil
 }
 
 func TestImportHandler(t *testing.T) {

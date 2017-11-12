@@ -1,4 +1,4 @@
-package gett
+package handlers
 
 import (
 	"github.com/valyala/fasthttp"
@@ -48,27 +48,6 @@ func GetHandler(ctx *fasthttp.RequestCtx) {
 	return
 }
 
-type ErrReport struct {
-	Id uint `json:"id"`
-	Err string `json:"err"`
-}
-
-// parses json body from request
-var getDriversFromRequest = func (ctx *fasthttp.RequestCtx) ([]models.DriverI, error) {
-	drivers := []models.Driver{}
-
-	if err := json.Unmarshal(ctx.PostBody(), &drivers); err != nil {
-		return nil, err
-	}
-
-	drvs := make([]models.DriverI, len(drivers) )
-	for i, v := range drivers {
-		drvs[i] = models.DriverI( v )
-	}
-
-	return drvs, nil
-}
-
 // import receives body in json format
 // and one by one add to database
 func ImportHandler(ctx *fasthttp.RequestCtx) {
@@ -99,4 +78,25 @@ func ImportHandler(ctx *fasthttp.RequestCtx) {
 		}
 		fmt.Fprint(ctx, string(text))
 	}
+}
+
+type ErrReport struct {
+	Id uint `json:"id"`
+	Err string `json:"err"`
+}
+
+// parses json body from request
+var getDriversFromRequest = func (ctx *fasthttp.RequestCtx) ([]models.DriverI, error) {
+	drivers := []models.Driver{}
+
+	if err := json.Unmarshal(ctx.PostBody(), &drivers); err != nil {
+		return nil, err
+	}
+
+	drvs := make([]models.DriverI, len(drivers) )
+	for i, v := range drivers {
+		drvs[i] = models.DriverI( v )
+	}
+
+	return drvs, nil
 }

@@ -9,6 +9,7 @@ import (
 	"os/signal"
 	"syscall"
 	"github.com/bolshaaan/gett/models"
+	"github.com/bolshaaan/gett/handlers"
 )
 
 var gracefulStop = make(chan os.Signal)
@@ -20,8 +21,8 @@ func StartApp( addr, pgUrl string ) {
 
 	router := fasthttprouter.New()
 
-	router.POST("/import", ImportHandler)
-	router.GET("/driver/:id", GetHandler)
+	router.POST("/import", handlers.ImportHandler)
+	router.GET("/driver/:id", handlers.GetHandler)
 
 	log.Infof("Starting server at %s", addr)
 

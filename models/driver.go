@@ -26,16 +26,6 @@ type Driver struct {
 	UpdatedAt time.Time `json:"-"`
 }
 
-/*
-	Interface, that helps to make mock Driver object
-	and test handlers
-*/
-type DriverI interface {
-	BeforeSave() error
-    Create() error
-    GetID() uint
-	Validate() error
-}
 
 // save to databse, check validness
 func (d Driver) Create() error {
