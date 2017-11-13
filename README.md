@@ -2,8 +2,8 @@
 
 Task: implement web server with 2 rest api handlers.
 
-In project structure you can find acceptance tests, that run server on
-seperate test port and on test database.
+In project structure you can find acceptance test, that runs server on
+seperate test port with connection to test database.
 
 If I have to do highload service, I certainly choose using batch insert
 with no ORM.
@@ -11,7 +11,7 @@ with no ORM.
 ## import handler
 
 We have some problems with status in bulk change operations.
-We do not know, how to treat, if some driver is not valid.
+We do not know, how to treat situation when some driver is not valid.
 - cancel all
 - or create good drivers
 
@@ -33,7 +33,7 @@ Of course, there should be more tests, checking failure logic.
 
 ## checking duplicates before save
 
-When we call import drivers with already exist id or license-number,
+When we call import drivers with already existing id or license-number,
 we must check response from database after insert. It's much easier to
 make **only 1** request to database, instead of 2 queries: 1. selecting driver by id or
 license, and 2. inserting new entry to database.
@@ -77,5 +77,8 @@ ok      github.com/bolshaaan/gett/models        0.111s  coverage: 92.0% of state
 ```
 
 
+## Mock...
 
+Unit tests must not connect to real database. So we have to write code, which allows to
+mock driver model. Interfaces are ought to be helpers for writing this code (see MockDriver in test_helpers.go)
 
