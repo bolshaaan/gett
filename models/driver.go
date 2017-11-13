@@ -26,7 +26,6 @@ type Driver struct {
 	UpdatedAt time.Time `json:"-"`
 }
 
-
 // save to databse, check validness
 func (d Driver) Create() error {
 	err := dbPq.DB.Create(&d).Error

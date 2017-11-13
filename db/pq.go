@@ -7,7 +7,6 @@ import (
 )
 
 var DB *gorm.DB
-//var pgScheme = `postgresql://postgres@127.0.0.1/gett?sslmode=disable`
 
 func InitDB(pgUrl string) {
 
